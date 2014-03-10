@@ -1,25 +1,35 @@
-﻿Build started 2014-03-10 13:54:48.
+﻿Build started 2014-03-10 14:35:40.
      1>Project "D:\Source\GenModel\GenModel.VS12\GenModelLib.vcxproj" on node 2 (Build target(s)).
      1>Build:
-         pushd .. && scons --notest --cplex --gurobi --glpk
+         pushd .. && scons --notest --cplex --gurobi -- glpk
          scons: Reading SConscript files ...
          System is Windows
          RELEASE
          ***************************************************************************
          ****** The following modules will not compiled into the final library *****
-         ['Scip', 'HyperGraph', 'Osi']
+         ['Scip', 'HyperGraph', 'Osi', 'Glpk']
          ***************************************************************************
          DEBUG
          ***************************************************************************
          ****** The following modules will not compiled into the final library *****
-         ['Scip', 'HyperGraph', 'Osi']
+         ['Scip', 'HyperGraph', 'Osi', 'Glpk']
          ***************************************************************************
          scons: done reading SConscript files.
          scons: Building targets ...
-         scons: `.' is up to date.
+         cl /Fobuild-debug\GenModel.obj /c src\GenModel.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DGUROBI_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\CoinOR\include\coin
+         GenModel.cpp
+         cl /Fobuild-debug\GenModelCplex.obj /c src\GenModelCplex.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DGUROBI_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\CoinOR\include\coin
+         GenModelCplex.cpp
+         cl /Fobuild-debug\GenModelGurobi.obj /c src\GenModelGurobi.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DGUROBI_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\CoinOR\include\coin
+         GenModelGurobi.cpp
+         cl /Fobuild-debug\GenModelInterface.obj /c src\GenModelInterface.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DGUROBI_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\CoinOR\include\coin
+         GenModelInterface.cpp
+         link /nologo /dll /out:lib\GenModelDLLd.dll /implib:lib\GenModelDLLd.lib /LIBPATH:C:\ILOG\CPLEX_Studio1251\cplex\lib\x64_windows_vs2010\stat_mta /LIBPATH:C:\gurobi560\win64\lib /LIBPATH:D:\Source\glpk-4.52\w64 /LIBPATH:D:\Source\CoinOR\lib cplex1251.lib gurobi_c++md2012.lib gurobi56.lib build-debug\GenModel.obj build-debug\GenModelCplex.obj build-debug\GenModelGurobi.obj build-debug\GenModelInterface.obj /def:src\GenModelInterface.def
+            Creating library lib\GenModelDLLd.lib and object lib\GenModelDLLd.exp
+     1>GenModelDLLd.exp : warning LNK4070: /OUT:GenModelInterface.dll directive in .EXP differs from output filename 'lib\GenModelDLLd.dll'; ignoring directive
          scons: done building targets.
      1>Done Building Project "D:\Source\GenModel\GenModel.VS12\GenModelLib.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.80
+Time Elapsed 00:00:07.55

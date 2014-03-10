@@ -218,7 +218,13 @@ if (not GetOption("notest")):
 	genmodeltestd = env.Program(target = "../bin/testd", source = "Test.cpp", LIBS=test_libs_list)
 	Depends(genmodeltestd, genmodellibd)
 	Default()
-	cleand = env.Command(target = "../cleand", source = None, action = "rm -f lib/"+target+" build-debug/*.os bin/testd")
+
+cleanActions = {
+	"Linux": "rm -f lib/"+target+" build-debug/*.os lib/gensolve.oct bin/test",
+	"Windows": "",
+	"Darwin": "rm -f lib/"+target+" build-debug/*.os lib/gensolve.oct bin/test"
+	}
+cleand = env.Command(target = "../cleand", source = None, action = cleanActions[system()])
 
 if (missingModules):
 	print("***************************************************************************")

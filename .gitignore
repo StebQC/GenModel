@@ -29,6 +29,13 @@ gensolve.oct
 ".sconsign.dblite"
 .DS_Store
 
+# Ignore Visual Studio Files
+*.obj
+*.suo
+*.sdf
+*.opensdf
+build/
+
 tmp/
 bin/
 lib/
