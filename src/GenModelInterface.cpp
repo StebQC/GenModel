@@ -36,7 +36,7 @@ vector<GenModel*> gmmap;
 
 GENMODEL_EXTERN_C_BEGIN
 
-bool VerifyId(long token)
+GenModelDLL_API bool STDCALL _VerifyId(long token)
 {
     if(token <0 || token >= gmmap.size())
     {
@@ -48,47 +48,47 @@ bool VerifyId(long token)
     
 }
 
-long WriteProblemToLpFile(char* filename, long token)
+GenModelDLL_API long STDCALL _WriteProblemToLpFile(char* filename, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
     return gmmap[token]->WriteProblemToLpFile(string(filename));
 }
 
-long WriteSolutionToFile(char* filename, long token)
+GenModelDLL_API long STDCALL _WriteSolutionToFile(char* filename, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
     return gmmap[token]->WriteSolutionToFile(string(filename));
 }
 
-double FindConstraintMaxLhs(long row, long token)
+GenModelDLL_API double STDCALL _FindConstraintMaxLhs(long row, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
     return gmmap[token]->FindConstraintMaxLhs(row);
 }
 
-double FindConstraintMinLhs(long row, long token)
+GenModelDLL_API double STDCALL _FindConstraintMinLhs(long row, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
     return gmmap[token]->FindConstraintMinLhs(row);
 }
 
-long MakeConstraintFeasible(long row, long token)
+GenModelDLL_API long STDCALL _MakeConstraintFeasible(long row, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
     return gmmap[token]->MakeConstraintFeasible(row);
 }
 
-long AddConst(char* cname, double rhs, char sense, long token)
+GenModelDLL_API long STDCALL _AddConst(char* cname, double rhs, char sense, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
     //printf("AddConst : name=%s, rhs=%f, sense=%c, token=%ld\n", cname, rhs, sense, token);
 	string cnameAsString(cname);
 	return gmmap[token]->AddConst(cnameAsString, rhs, sense);
 }
 
-bool AddConstBulk(char* cname, double* rhs, long length, char sense, long token)
+GenModelDLL_API bool STDCALL _AddConstBulk(char* cname, double* rhs, long length, char sense, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	string cnameAsString(cname);
 	for (int i = 0; i < length; i++)
 	{
@@ -97,17 +97,17 @@ bool AddConstBulk(char* cname, double* rhs, long length, char sense, long token)
 	return true;
 }
 
-long AddVar(char* nn, double o, double l, double u, char t, long token)
+GenModelDLL_API long STDCALL _AddVar(char* nn, double o, double l, double u, char t, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
     //printf("AddVar : name=%s, obj=%f, lower=%f, upper=%f, type=%c, token=%ld\n", nn, o, l, u, t, token);
 	string nnAsString(nn);
 	return gmmap[token]->AddVar(nnAsString, o, l, u, t);
 }
 
-bool AddVarBulk(char* nn, double* o, long length, double l, double u, char t, long token)
+GenModelDLL_API bool STDCALL _AddVarBulk(char* nn, double* o, long length, double l, double u, char t, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	string nnAsString(nn);
 	for (int i = 0; i < length; i++)
 	{
@@ -116,28 +116,28 @@ bool AddVarBulk(char* nn, double* o, long length, double l, double u, char t, lo
 	return true;
 }
 
-long SetQpCoef(long i, long j, double val, long token)
+GenModelDLL_API long STDCALL _SetQpCoef(long i, long j, double val, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
     return gmmap[token]->vars.SetQpCoef(i, j, val);
 }
 
-long AddNz(long row, long col, double val, long token)
+GenModelDLL_API long STDCALL _AddNz(long row, long col, double val, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	return gmmap[token]->AddNz(row, col, val);
 }
 
-long AddNzToLast(long col, double val, long token)
+GenModelDLL_API long STDCALL _AddNzToLast(long col, double val, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
     //printf("AddNzToLast : col=%d, val=%f, token=%ld\n", col, val, token);
 	return gmmap[token]->AddNzToLast(col, val);
 }
 
-long AddNzBulk(long* rows, long* cols, double* values, long valuesLength, long rowCount, long colCount, long iterations, long token)
+GenModelDLL_API long STDCALL _AddNzBulk(long* rows, long* cols, double* values, long valuesLength, long rowCount, long colCount, long iterations, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	//printf ("AddNzBulk %ld,%ld,%ld,%ld\n",valuesLength, rowCount, colCount, iterations);
     
 	int rowIndex = 0;
@@ -157,43 +157,43 @@ long AddNzBulk(long* rows, long* cols, double* values, long valuesLength, long r
 	return true;
 }
 
-long SetNumbers(long token)
+GenModelDLL_API long STDCALL _SetNumbers(long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	return gmmap[token]->SetNumbers();
 }
 
-long SetLongParam(char* param, long val, long token)
+GenModelDLL_API long STDCALL _SetLongParam(char* param, long val, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	string paramAsString(param);
 	return gmmap[token]->SetLongParam(paramAsString, val);
 }
 
-long SetDblParam(char* param, double val, long token)
+GenModelDLL_API long STDCALL _SetDblParam(char* param, double val, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	string paramAsString(param);
 	return gmmap[token]->SetDblParam(paramAsString, val);
 }
 
-long SetBoolParam(char* param, bool val, long token)
+GenModelDLL_API long STDCALL _SetBoolParam(char* param, bool val, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
     //printf("SetBoolParam : param=%s, val=%d, token=%ld\n", param, val, token);
 	string paramAsString(param);
 	return gmmap[token]->SetBoolParam(paramAsString, val);
 }
 
-long SetStrParam(char* param, char* val, long token)
+GenModelDLL_API long STDCALL _SetStrParam(char* param, char* val, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	string paramAsString(param);
 	string valueAsString(val);
 	return gmmap[token]->SetStrParam(paramAsString, valueAsString);
 }
 
-long CreateNewModel(char type, char* name = NULL)
+GenModelDLL_API long STDCALL _CreateNewModel(char type, char* name = NULL)
 {
 	long ret = gmmap.size();
     switch (type) {
@@ -228,7 +228,7 @@ long CreateNewModel(char type, char* name = NULL)
     return ret;
 }
 
-bool IsSolverAvailable(char type)
+GenModelDLL_API bool STDCALL _IsSolverAvailable(char type)
 {
     switch (type) {
         case 'C':
@@ -255,9 +255,9 @@ bool IsSolverAvailable(char type)
 	return false;
 }
 
-long CopyOrder(long token, int count, int* ind, int* weight)
+GenModelDLL_API long STDCALL _CopyOrder(long token, int count, int* ind, int* weight)
 {
-    VerifyId(token);
+    _VerifyId(token);
 #ifdef CPLEX_SOLVER
 	CplexData* d = static_cast<CplexData*>(gmmap[token]->solverdata);
 	CPXcopyorder(d->env, d->lp, count, ind, weight, NULL);
@@ -267,25 +267,25 @@ long CopyOrder(long token, int count, int* ind, int* weight)
 	return 0;
 }
 
-long DeleteModel(long token)
+GenModelDLL_API long STDCALL _DeleteModel(long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	delete gmmap[token];
 	return 0;
 }
 
-long CreateModel(long token)
+GenModelDLL_API long STDCALL _CreateModel(long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	gmmap[token]->SetNumbers();
 	gmmap[token]->Init(gmmap[token]->name);
 	gmmap[token]->CreateModel();
 	return 0;
 }
 
-long SolveModel(long token)
+GenModelDLL_API long STDCALL _SolveModel(long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	gmmap[token]->Solve();
 	gmmap[token]->SetSol();
     /*for(int i = 0; i < gmmap[token]->nc; i++)
@@ -295,15 +295,15 @@ long SolveModel(long token)
 	return long(gmmap[token]->solstat);
 }
 
-bool HasSolution(long token)
+GenModelDLL_API bool STDCALL _HasSolution(long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	return gmmap[token]->hassolution;
 }
 
-bool GetSolVars(double* values, long length, long token)
+GenModelDLL_API bool STDCALL _GetSolVars(double* values, long length, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	if (length != gmmap[token]->nc)
 		throw string("Wrong length : GetSolVars()");
     
@@ -313,9 +313,9 @@ bool GetSolVars(double* values, long length, long token)
 	return true;
 }
 
-bool GetDualPrices(double* values, long length, long token)
+GenModelDLL_API bool STDCALL _GetDualPrices(double* values, long length, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	if (length != gmmap[token]->nr)
 		throw string("Wrong length : GetDualPrices()");
     
@@ -325,9 +325,9 @@ bool GetDualPrices(double* values, long length, long token)
 	return true;
 }
 
-bool GetSlacks(double* values, long length, long token)
+GenModelDLL_API bool STDCALL _GetSlacks(double* values, long length, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	if (length != gmmap[token]->nr)
 		throw string("Wrong length : GetSlacks()");
     
@@ -337,9 +337,9 @@ bool GetSlacks(double* values, long length, long token)
     return true;
 }
 
-bool GetReducedCosts(double* values, long length, long token)
+GenModelDLL_API bool STDCALL _GetReducedCosts(double* values, long length, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	if (length != gmmap[token]->nc)
 		throw string("Wrong length : GetReducedCosts()");
     
@@ -349,9 +349,9 @@ bool GetReducedCosts(double* values, long length, long token)
 	return true;
 }
 
-bool GetRowValues(double* values, long length, long rowIndex, long token)
+GenModelDLL_API bool STDCALL _GetRowValues(double* values, long length, long rowIndex, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	if (length != gmmap[token]->nc || rowIndex >= gmmap[token]->nr)
 	{
 		return false;
@@ -364,9 +364,9 @@ bool GetRowValues(double* values, long length, long rowIndex, long token)
 	return true;
 }
 
-bool GetObjCoef(double* values, long length, long token)
+GenModelDLL_API bool STDCALL _GetObjCoef(double* values, long length, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	if (length != gmmap[token]->nc)
 	{
 		return false;
@@ -380,9 +380,9 @@ bool GetObjCoef(double* values, long length, long token)
 	return true;
 }
 
-bool GetBounds(double* lb, double* ub, long length, long token)
+GenModelDLL_API bool STDCALL _GetBounds(double* lb, double* ub, long length, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	if (length != gmmap[token]->nc)
 	{
 		return false;
@@ -397,95 +397,95 @@ bool GetBounds(double* lb, double* ub, long length, long token)
 	return true;
 }
 
-double GetLowerBound(long col, long token)
+GenModelDLL_API double STDCALL _GetLowerBound(long col, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	if (col != gmmap[token]->nc || col < 0)
         return (numeric_limits<double>::has_signaling_NaN ? numeric_limits<double>::signaling_NaN() : numeric_limits<double>::quiet_NaN());
     
 	return gmmap[token]->vars.lb[col];
 }
 
-double GetUpperBound(long col, long token)
+GenModelDLL_API double STDCALL _GetUpperBound(long col, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	if (col != gmmap[token]->nc || col < 0)
         return (numeric_limits<double>::has_signaling_NaN ? numeric_limits<double>::signaling_NaN() : numeric_limits<double>::quiet_NaN());
     
 	return gmmap[token]->vars.ub[col];
 }
 
-bool SetLowerBound(long col, double val, long token)
+GenModelDLL_API bool STDCALL _SetLowerBound(long col, double val, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	if (col != gmmap[token]->nc || col < 0)
         return false;
     gmmap[token]->vars.lb[col] = val;
 	return true;
 }
 
-bool SetUpperBound(long col, double val, long token)
+GenModelDLL_API bool STDCALL _SetUpperBound(long col, double val, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	if (col != gmmap[token]->nc || col < 0)
         return false;
     gmmap[token]->vars.ub[col] = val;
 	return true;
 }
 
-double GetRHS(long row, long token)
+GenModelDLL_API double STDCALL _GetRHS(long row, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	return gmmap[token]->consts[row].lrhs;
 }
 
-bool SetRHS(long row, double val, long token)
+GenModelDLL_API bool STDCALL _SetRHS(long row, double val, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	gmmap[token]->consts[row].lrhs = val;
 	return true;
 }
 
-char GetSense(long row, long token)
+GenModelDLL_API char STDCALL _GetSense(long row, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	return gmmap[token]->consts[row].sense;
 }
 
-bool SetSense(long row, char sense, long token)
+GenModelDLL_API bool STDCALL _SetSense(long row, char sense, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	gmmap[token]->consts[row].sense = sense;
 	return true;
 }
 
-double GetObjVal(long token)
+GenModelDLL_API double STDCALL _GetObjVal(long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	return gmmap[token]->objval;
 }
 
-long ChangeBulkBounds(int count, int* indices, char* types, double* values, long token)
+GenModelDLL_API long STDCALL _ChangeBulkBounds(int count, int* indices, char* types, double* values, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	return gmmap[token]->ChangeBulkBounds(count, indices, types, values);
 }
 
-long ChangeBulkObjectives(int count, int* indices, double* values, long token)
+GenModelDLL_API long STDCALL _ChangeBulkObjectives(int count, int* indices, double* values, long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	return gmmap[token]->ChangeBulkObjectives(count, indices, values);
 }
 
-long DeleteMipStarts(long token)
+GenModelDLL_API long STDCALL _DeleteMipStarts(long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	return gmmap[token]->DeleteMipStarts();
 }
 
-double GetMIPRelativeGap(long token)
+GenModelDLL_API double STDCALL _GetMIPRelativeGap(long token)
 {
-    VerifyId(token);
+    _VerifyId(token);
 	return gmmap[token]->GetMIPRelativeGap();
 }
 

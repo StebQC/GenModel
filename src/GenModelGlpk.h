@@ -53,7 +53,7 @@ public:
 	~GenModelGlpk() {if (solverdata != NULL) delete static_cast<GlpkData*>(solverdata);}
 	long Init(string name);
 	long CreateModel();
-    long CreateModel(string filename, int type, string dn);
+	long CreateModel(string filename, int type, string dn);
 	long AddSolverRow(vector<int>& ind, vector<double>& val, double rhs, char sense, string name);
 	long AddSolverCol(vector<int>& ind, vector<double>& val, double obj, double lb, double ub, string name, char type = 'C');
 	long AddCut(int* cols, double* vals, int nz, double rhs, char sense, const char* name);
@@ -61,8 +61,8 @@ public:
 	long Solve();
 	long SetSol();
 	long Clean();
-    long WriteSolutionToFile(string filename);
-    long WriteProblemToLpFile(string filename);
+	long WriteSolutionToFile(string filename);
+	long WriteProblemToLpFile(string filename);
 };
 
 

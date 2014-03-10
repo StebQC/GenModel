@@ -6,6 +6,7 @@ AddOption("--glpk", action="store_true", dest="glpk", default=False)
 AddOption("--grb", "--gurobi", action="store_true", dest="grb", default=False)
 AddOption("--scip", action="store_true", dest="scip", default=False)
 AddOption("--hg", "--hypergraph", action="store_true", dest="hg", default=False)
+AddOption("--notest", action="store_true", dest="notest", default=False)
 
 from platform import system
 print("System is "+ system());

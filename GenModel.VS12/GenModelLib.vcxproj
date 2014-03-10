@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\build-debug\SConscript" />
+    <None Include="..\build-release\SConscript" />
+    <None Include="..\SConstruct" />
+    <None Include="..\src\GenModelInterface.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\GenModel.cpp" />
+    <ClCompile Include="..\src\GenModelCplex.cpp" />
+    <ClCompile Include="..\src\GenModelGlpk.cpp" />
+    <ClCompile Include="..\src\GenModelGurobi.cpp" />
+    <ClCompile Include="..\src\GenModelInterface.cpp" />
+    <ClCompile Include="..\src\GenModelOctave.cpp" />
+    <ClCompile Include="..\src\GenModelOsi.cpp" />
+    <ClCompile Include="..\src\GenModelOsiInterface.cpp" />
+    <ClCompile Include="..\src\GenModelScip.cpp" />
+    <ClCompile Include="..\src\HyperGraph.cpp" />
+    <ClCompile Include="..\src\ProblemReaderOsi.cpp" />
+    <ClCompile Include="..\src\Test.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\GenModel.h" />
+    <ClInclude Include="..\src\GenModelCplex.h" />
+    <ClInclude Include="..\src\GenModelGlpk.h" />
+    <ClInclude Include="..\src\GenModelGurobi.h" />
+    <ClInclude Include="..\src\GenModelHG.h" />
+    <ClInclude Include="..\src\GenModelInterface.h" />
+    <ClInclude Include="..\src\GenModelOctave.h" />
+    <ClInclude Include="..\src\GenModelOsi.h" />
+    <ClInclude Include="..\src\GenModelOsiInterface.h" />
+    <ClInclude Include="..\src\GenModelScip.h" />
+    <ClInclude Include="..\src\HyperGraph.h" />
+    <ClInclude Include="..\src\ProblemReaderOsi.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DF91AFA2-D9B3-42C9-A122-46C414D8359E}</ProjectGuid>
+    <Keyword>MakeFileProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <NMakeBuildCommandLine>pushd .. &amp;&amp; scons --notest --cplex --gurobi --glpk</NMakeBuildCommandLine>
+    <NMakeOutput>genmodel.dll</NMakeOutput>
+    <NMakeCleanCommandLine>pushd .. &amp;&amp; scons -c</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>pushd .. &amp;&amp; scons -c &amp;&amp; scons --notest --cplex --gurobi --glpk</NMakeReBuildCommandLine>
+    <NMakePreprocessorDefinitions>WIN64;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <OutDir>.\build</OutDir>
+    <IntDir>.\build</IntDir>
+    <IncludePath>D:\Source\glpk-4.52\src;C:\gurobi550\win64\include;D:\Source\CoinOR\include\coin;C:\ILOG\CPLEX_Studio125\cplex\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <NMakeBuildCommandLine>scons</NMakeBuildCommandLine>
+    <NMakeOutput>GenModelDLL.dll</NMakeOutput>
+    <NMakeCleanCommandLine>scons -c</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>scons -c &amp;&amp; scons</NMakeReBuildCommandLine>
+    <NMakePreprocessorDefinitions>WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

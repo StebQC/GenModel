@@ -1,7 +1,7 @@
 #include "GenModelGlpk.h"
-#ifdef OSI_MODULE
-#include "ProblemReaderOsi.h"
-#endif
+//#ifdef OSI_MODULE
+//#include "ProblemReaderOsi.h"
+//#endif
 #include <limits>
 
 

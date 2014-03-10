@@ -1,0 +1,25 @@
+﻿Build started 2014-03-10 13:54:48.
+     1>Project "D:\Source\GenModel\GenModel.VS12\GenModelLib.vcxproj" on node 2 (Build target(s)).
+     1>Build:
+         pushd .. && scons --notest --cplex --gurobi --glpk
+         scons: Reading SConscript files ...
+         System is Windows
+         RELEASE
+         ***************************************************************************
+         ****** The following modules will not compiled into the final library *****
+         ['Scip', 'HyperGraph', 'Osi']
+         ***************************************************************************
+         DEBUG
+         ***************************************************************************
+         ****** The following modules will not compiled into the final library *****
+         ['Scip', 'HyperGraph', 'Osi']
+         ***************************************************************************
+         scons: done reading SConscript files.
+         scons: Building targets ...
+         scons: `.' is up to date.
+         scons: done building targets.
+     1>Done Building Project "D:\Source\GenModel\GenModel.VS12\GenModelLib.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.80
