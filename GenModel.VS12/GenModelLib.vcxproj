@@ -24,6 +24,7 @@
     <None Include="..\src\GenModelGurobi.h" />
     <None Include="..\src\GenModelHG.h" />
     <None Include="..\src\GenModelInterface.cpp" />
+    <None Include="..\src\GenModelInterface.def" />
     <None Include="..\src\GenModelInterface.h" />
     <None Include="..\src\GenModelOctave.cpp" />
     <None Include="..\src\GenModelOctave.h" />

@@ -18,34 +18,34 @@
 #endif
 
 #ifdef CPLEX_MODULE
-	#define CPLEX_CREATE gmmap.push_back(new GenModelCplex())
+    #define CPLEX_CREATE gmmap.push_back(new GenModelCplex())
     #define CPLEX_EXIST true
 #else
-	#define CPLEX_CREATE throw string("Cplex solver not available")
+    #define CPLEX_CREATE throw string("Cplex solver not available")
     #define CPLEX_EXIST false
 #endif
 
 #ifdef GUROBI_MODULE
-	#define GUROBI_CREATE gmmap.push_back(new GenModelGurobi())
+    #define GUROBI_CREATE gmmap.push_back(new GenModelGurobi())
     #define GUROBI_EXIST true
 #else
-	#define GUROBI_CREATE throw string("Gurobi solver not available")
+    #define GUROBI_CREATE throw string("Gurobi solver not available")
     #define GUROBI_EXIST false
 #endif
 
 #ifdef HG_MODULE
-	#define HG_CREATE gmmap.push_back(new GenModelHG())
+    #define HG_CREATE gmmap.push_back(new GenModelHG())
     #define HG_EXIST true
 #else
-	#define HG_CREATE throw string("Hypergraph solver not available")
+    #define HG_CREATE throw string("Hypergraph solver not available")
     #define HG_EXIST false
 #endif
 
 #ifdef GLPK_MODULE
-	#define GLPK_CREATE gmmap.push_back(new GenModelGlpk())
+    #define GLPK_CREATE gmmap.push_back(new GenModelGlpk())
     #define GLPK_EXIST true
 #else
-	#define GLPK_CREATE throw string("Glpk solver not available")
+    #define GLPK_CREATE throw string("Glpk solver not available")
     #define GLPK_EXIST false
 #endif
 
@@ -112,6 +112,9 @@ GenModelDLL_API long STDCALL _ChangeBulkBounds(int count, int* indices, char* ty
 GenModelDLL_API long STDCALL _ChangeBulkObjectives(int count, int* indices, double* values, long token);
 GenModelDLL_API long STDCALL _DeleteMipStarts(long token);
 GenModelDLL_API double STDCALL _GetMIPRelativeGap(long token);
+GenModelDLL_API double STDCALL _SetObjUpperCutoff(double value, long token);
+GenModelDLL_API void STDCALL _AttachCallback(bool(*callbackFunction) (double obj, double bestBound, bool feasibleSolution), long token);
+GenModelDLL_API double STDCALL _GetMIPBestBound(long token);
 
 GENMODEL_EXTERN_C_END
 

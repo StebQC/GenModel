@@ -90,5 +90,8 @@
     <None Include="..\SConstruct" />
     <None Include="..\build-debug\SConscript" />
     <None Include="..\build-release\SConscript" />
+    <None Include="..\src\GenModelInterface.def">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

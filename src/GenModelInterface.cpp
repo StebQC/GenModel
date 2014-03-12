@@ -489,4 +489,19 @@ GenModelDLL_API double STDCALL _GetMIPRelativeGap(long token)
     return gmmap[token]->GetMIPRelativeGap();
 }
 
+GenModelDLL_API double STDCALL _SetObjUpperCutoff(double value, long token)
+{
+	return gmmap[token]->SetObjUpperCutoff(value);
+}
+
+GenModelDLL_API void STDCALL _AttachCallback(bool(*callbackFunction) (double obj, double bestBound, bool feasibleSolution), long token)
+{
+	gmmap[token]->AttachCallback(callbackFunction);
+}
+
+GenModelDLL_API double STDCALL _GetMIPBestBound(long token)
+{
+	return gmmap[token]->GetMIPBestBound();
+}
+
 GENMODEL_EXTERN_C_END

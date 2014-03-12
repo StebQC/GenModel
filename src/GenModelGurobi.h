@@ -15,7 +15,7 @@
 #endif
 
 #include "GenModel.h"
-#include "gurobi_c.h"
+//#include "gurobi_c.h"
 #include "gurobi_c++.h"
 
 using namespace std;
@@ -38,6 +38,7 @@ public:
 	string* cname;
 	long nc;
 	long nr;
+	GRBCallback* callback;
 };
 
 class GenModelGurobi : public GenModel
@@ -51,6 +52,7 @@ public:
 	long AddSolverCol(vector<int>& ind, vector<double>& val, double obj, double lb, double ub, string name, char type = 'C');
 	long AddCut(int* cols, double* vals, int nz, double rhs, char sense, const char* name);
 	long AddCol(int* newi, double* newcol, int nz, double obj, double lb, double ub, const char* name, char type = 'C');
+	void AttachCallback(bool(*callbackFunction) (double obj, double bestBound, bool feasibleSolution));
 	long Solve();
 	long SetSol();
 	long Clean();

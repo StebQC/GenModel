@@ -36,3 +36,6 @@ _ChangeBulkBounds
 _ChangeBulkObjectives
 _DeleteMipStarts
 _GetMIPRelativeGap
+_SetObjUpperCutoff
+_GetMIPBestBound
+_AttachCallback
