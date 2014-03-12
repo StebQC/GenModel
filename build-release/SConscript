@@ -60,15 +60,17 @@ cpppath = {
 		
 libpath = {
 	"Linux": [#r"/opt/ibm/ILOG/CPLEX_Studio126/cplex/bin/x86-64_sles10_4.1/",
-			  #os.environ['HOME']+"/source/gurobi510/linux64/lib",
-			  r"/usr/local/lib/"],
+			  #os.environ.get('HOME', '')+"/source/gurobi510/linux64/lib",
+			  r"/usr/local/lib/",
+			  r"../lib"],
 	"Windows": [r"C:\ILOG\CPLEX_Studio1251\cplex\lib\x64_windows_vs2010\stat_mta",
 		r"C:\gurobi560\win64\lib",
 		r"D:\Source\glpk-4.52\w64",
 		r"D:\Source\Cbc-2.8.8\Cbc\MSVisualStudio\v10\x64-v110-Release"],
 	"Darwin": [os.environ.get('HOME', '')+"/Applications/IBM/ILOG/CPLEX_Studio126/cplex/lib/x86-64_osx/static_pic",
 			  r"/Library/gurobi560/mac64/lib",
-			  r"/Users/mbouchard/source/scipoptsuite-3.0.2/scip-3.0.2/lib/"]
+			  r"/Users/mbouchard/source/scipoptsuite-3.0.2/scip-3.0.2/lib/",
+			  r"../lib"]
 	}
 
 cppdefines = []
@@ -167,9 +169,9 @@ libs = list(OrderedDict.fromkeys(libs))
 # -std=c++11 : c++ version flag
 # -pthread : changes the way some libc headers work for multithread
 cxxflags = {
-	"Linux": "-g -O2 -Wall -pthread -fmessage-length=0 -fPIC", # -std=c++11",
+	"Linux": "-O2 -Wall -pthread -fmessage-length=0 -fPIC -std=c++0x",
 	"Windows": "/O2 /MD /EHsc",
-	"Darwin": "-g -O2 -m64 -Wall -pthread -fmessage-length=0 -fPIC -std=c++11",
+	"Darwin": "-O2 -m64 -Wall -pthread -fmessage-length=0 -fPIC -std=c++11",
 	}
 	
 # Create an environmnet
