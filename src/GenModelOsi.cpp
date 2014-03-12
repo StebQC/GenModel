@@ -810,6 +810,20 @@ long GenModelOsi::AddCol(int* newi, double* newcol, int nz, double obj, double l
 	return 0;
 }
 
+double GenModelOsi::GetMIPRelativeGap()
+{
+	//if (!bcreated)
+	//	return ThrowError("ChangeBulkNz() not available : Problem not created yet");
+	//CplexData* d = (CplexData*)solverdata;
+	double gap = 0, bestobjval = 0;
+	//CPXgetbestobjval(d->env, d->lp, &bestobjval);
+	//if (bestobjval > 0)	// If the optimal solution is found by the presolve, the CPXgetbestobjval = 0, and the CPXgetmiprelgap ~ 1
+	//	CPXgetmiprelgap(d->env, d->lp, &gap);
+
+	return gap;
+}
+
+
 long GenModelOsi::Clean()
 {
 	if(solverdata != NULL)

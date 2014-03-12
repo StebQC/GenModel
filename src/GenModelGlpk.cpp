@@ -1,35 +1,35 @@
 #include "GenModelGlpk.h"
-//#ifdef OSI_MODULE
-//#include "ProblemReaderOsi.h"
-//#endif
+#ifdef OSI_MODULE
+#include "ProblemReaderOsi.h"
+#endif
 #include <limits>
 
 
 
 long GenModelGlpk::WriteProblemToLpFile(string filename)
 {
-    //if(!bcreated)
-    //    throw string("WriteProblemToLpFile() not available : Problem not created yet;");
-    
-    GlpkData* d = static_cast<GlpkData*>(solverdata);
-    glp_write_prob(d->model, 0, filename.c_str());
-    return 0;
+	//if(!bcreated)
+	//    throw string("WriteProblemToLpFile() not available : Problem not created yet;");
+	
+	GlpkData* d = static_cast<GlpkData*>(solverdata);
+	glp_write_prob(d->model, 0, filename.c_str());
+	return 0;
 }
 
 long GenModelGlpk::WriteSolutionToFile(string filename)
 {
-    //if(!bcreated)
-    //    throw string("WriteSolutionToFile() not available : Problem not created yet;");
-    
-    FILE* f = fopen(filename.c_str(), "w");
-    for(long i = 0; i < long(vars.n); i++)
+	//if(!bcreated)
+	//    throw string("WriteSolutionToFile() not available : Problem not created yet;");
+	
+	FILE* f = fopen(filename.c_str(), "w");
+	for(long i = 0; i < long(vars.n); i++)
 	{
 		if(fabs(vars.sol[i]) > 0.000001)
 			fprintf(f, "%s :		%f\n", vars.name[i].c_str(), vars.sol[i]);
 	}
-    
-    fclose(f);
-    return 0;
+	
+	fclose(f);
+	return 0;
 }
 
 long GenModelGlpk::Solve()
@@ -114,8 +114,8 @@ long GenModelGlpk::SetSol()
 	}
 	//if (solstat == GLP_OPT)
 	//	solstat = 1;
-    if(boolParam.count("print_version") > 0 && boolParam["print_version"])
-        printf("*********** Genmodel version = %s ***********\n", version.c_str());
+	if(boolParam.count("print_version") > 0 && boolParam["print_version"])
+		printf("*********** Genmodel version = %s ***********\n", version.c_str());
 
 	return 0;
 }
@@ -233,13 +233,13 @@ long GenModelGlpk::CreateModel()
 long GenModelGlpk::CreateModel(string filename, int type, string dn)
 {
 #ifdef OSI_MODULE
-    ReadFromFile(static_cast<GenModel*>(this), filename, type);
-    SetNumbers();
-    CreateModel();
+	ReadFromFile(static_cast<GenModel*>(this), filename, type);
+	SetNumbers();
+	CreateModel();
 #else
-    throw string("Cannot use CreateModel(filenamem, type, dn) : Osi Module not present");
+	throw string("Cannot use CreateModel(filenamem, type, dn) : Osi Module not present");
 #endif
-    return 0;
+	return 0;
 }
 
 long GenModelGlpk::AddSolverRow(vector<int>& ind, vector<double>& val, double rhs, char sense, string name)
@@ -363,13 +363,13 @@ long GenModelGlpk::Init(string name)
 		d->simplex_param.tm_lim = dblParam["time_limit"] * 1000;
 		d->mip_param.tm_lim = dblParam["time_limit"] * 1000;
 	}
-    if(dblParam.count("relative_mip_gap_tolerance") > 0)
+	if(dblParam.count("relative_mip_gap_tolerance") > 0)
 	{
 		//d->simplex_param.tm_lim = dblParam["relative_mip_gap_tolerance"];
 		d->mip_param.mip_gap = dblParam["relative_mip_gap_tolerance"];
 	}
-    
-    
+	
+	
 	return 0;
 }
 

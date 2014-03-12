@@ -1,30 +1,53 @@
-﻿Build started 2014-03-10 14:35:40.
+﻿Build started 2014-03-12 09:21:55.
      1>Project "D:\Source\GenModel\GenModel.VS12\GenModelLib.vcxproj" on node 2 (Build target(s)).
      1>Build:
-         pushd .. && scons --notest --cplex --gurobi -- glpk
+         pushd .. && scons --notest --cplex --gurobi --glpk --osi
          scons: Reading SConscript files ...
          System is Windows
          RELEASE
          ***************************************************************************
          ****** The following modules will not compiled into the final library *****
-         ['Scip', 'HyperGraph', 'Osi', 'Glpk']
+         ['Scip', 'HyperGraph']
          ***************************************************************************
          DEBUG
          ***************************************************************************
          ****** The following modules will not compiled into the final library *****
-         ['Scip', 'HyperGraph', 'Osi', 'Glpk']
+         ['Scip', 'HyperGraph']
          ***************************************************************************
          scons: done reading SConscript files.
          scons: Building targets ...
-         cl /Fobuild-debug\GenModel.obj /c src\GenModel.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DGUROBI_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\CoinOR\include\coin
+         cl /Fobuild-debug\GenModel.obj /c src\GenModel.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DOSI_MODULE /DGUROBI_MODULE /DGLPK_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\Cbc-2.8.8\include
          GenModel.cpp
-         cl /Fobuild-debug\GenModelCplex.obj /c src\GenModelCplex.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DGUROBI_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\CoinOR\include\coin
+         cl /Fobuild-debug\GenModelCplex.obj /c src\GenModelCplex.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DOSI_MODULE /DGUROBI_MODULE /DGLPK_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\Cbc-2.8.8\include
          GenModelCplex.cpp
-         cl /Fobuild-debug\GenModelGurobi.obj /c src\GenModelGurobi.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DGUROBI_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\CoinOR\include\coin
-         GenModelGurobi.cpp
-         cl /Fobuild-debug\GenModelInterface.obj /c src\GenModelInterface.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DGUROBI_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\CoinOR\include\coin
+         cl /Fobuild-debug\GenModelGlpk.obj /c src\GenModelGlpk.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DOSI_MODULE /DGUROBI_MODULE /DGLPK_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\Cbc-2.8.8\include
+         GenModelGlpk.cpp
+         cl /Fobuild-debug\GenModelInterface.obj /c src\GenModelInterface.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DOSI_MODULE /DGUROBI_MODULE /DGLPK_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\Cbc-2.8.8\include
          GenModelInterface.cpp
-         link /nologo /dll /out:lib\GenModelDLLd.dll /implib:lib\GenModelDLLd.lib /LIBPATH:C:\ILOG\CPLEX_Studio1251\cplex\lib\x64_windows_vs2010\stat_mta /LIBPATH:C:\gurobi560\win64\lib /LIBPATH:D:\Source\glpk-4.52\w64 /LIBPATH:D:\Source\CoinOR\lib cplex1251.lib gurobi_c++md2012.lib gurobi56.lib build-debug\GenModel.obj build-debug\GenModelCplex.obj build-debug\GenModelGurobi.obj build-debug\GenModelInterface.obj /def:src\GenModelInterface.def
+         cl /Fobuild-debug\GenModelOsi.obj /c src\GenModelOsi.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DOSI_MODULE /DGUROBI_MODULE /DGLPK_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\Cbc-2.8.8\include
+         GenModelOsi.cpp
+         cl /Fobuild-debug\GenModelOsiInterface.obj /c src\GenModelOsiInterface.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DOSI_MODULE /DGUROBI_MODULE /DGLPK_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\Cbc-2.8.8\include
+         GenModelOsiInterface.cpp
+         cl /Fobuild-debug\ProblemReaderOsi.obj /c src\ProblemReaderOsi.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DOSI_MODULE /DGUROBI_MODULE /DGLPK_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\Cbc-2.8.8\include
+         ProblemReaderOsi.cpp
+         cl /Fobuild-release\GenModel.obj /c src\GenModel.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DOSI_MODULE /DGUROBI_MODULE /DGLPK_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\Cbc-2.8.8\include
+         GenModel.cpp
+         cl /Fobuild-release\GenModelCplex.obj /c src\GenModelCplex.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DOSI_MODULE /DGUROBI_MODULE /DGLPK_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\Cbc-2.8.8\include
+         GenModelCplex.cpp
+         cl /Fobuild-release\GenModelGlpk.obj /c src\GenModelGlpk.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DOSI_MODULE /DGUROBI_MODULE /DGLPK_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\Cbc-2.8.8\include
+         GenModelGlpk.cpp
+         cl /Fobuild-release\GenModelInterface.obj /c src\GenModelInterface.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DOSI_MODULE /DGUROBI_MODULE /DGLPK_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\Cbc-2.8.8\include
+         GenModelInterface.cpp
+         cl /Fobuild-release\GenModelOsi.obj /c src\GenModelOsi.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DOSI_MODULE /DGUROBI_MODULE /DGLPK_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\Cbc-2.8.8\include
+         GenModelOsi.cpp
+         cl /Fobuild-release\GenModelOsiInterface.obj /c src\GenModelOsiInterface.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DOSI_MODULE /DGUROBI_MODULE /DGLPK_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\Cbc-2.8.8\include
+         GenModelOsiInterface.cpp
+         cl /Fobuild-release\ProblemReaderOsi.obj /c src\ProblemReaderOsi.cpp /O2 /MD /EHsc /nologo /DWIN64 /DCPLEX_MODULE /DOSI_MODULE /DGUROBI_MODULE /DGLPK_MODULE /IC:\ILOG\CPLEX_Studio1251\cplex\include /IC:\gurobi560\win64\include /ID:\Source\glpk-4.52\src /ID:\Source\Cbc-2.8.8\include
+         ProblemReaderOsi.cpp
+         link /nologo /dll /out:lib\GenModelDLL.dll /implib:lib\GenModelDLL.lib /LIBPATH:C:\ILOG\CPLEX_Studio1251\cplex\lib\x64_windows_vs2010\stat_mta /LIBPATH:C:\gurobi560\win64\lib /LIBPATH:D:\Source\glpk-4.52\w64 /LIBPATH:D:\Source\Cbc-2.8.8\Cbc\MSVisualStudio\v10\x64-v110-Release cplex1251.lib libClp.lib libCbc.lib libCgl.lib libOsi.lib libOsiClp.lib libCoinUtils.lib gurobi_c++md2012.lib gurobi56.lib glpk_4_52.lib build-release\GenModel.obj build-release\GenModelCplex.obj build-release\GenModelGlpk.obj build-release\GenModelGurobi.obj build-release\GenModelInterface.obj build-release\GenModelOsi.obj build-release\GenModelOsiInterface.obj build-release\ProblemReaderOsi.obj /def:src\GenModelInterface.def
+            Creating library lib\GenModelDLL.lib and object lib\GenModelDLL.exp
+     1>GenModelDLL.exp : warning LNK4070: /OUT:GenModelInterface.dll directive in .EXP differs from output filename 'lib\GenModelDLL.dll'; ignoring directive
+         link /nologo /dll /out:lib\GenModelDLLd.dll /implib:lib\GenModelDLLd.lib /LIBPATH:C:\ILOG\CPLEX_Studio1251\cplex\lib\x64_windows_vs2010\stat_mta /LIBPATH:C:\gurobi560\win64\lib /LIBPATH:D:\Source\glpk-4.52\w64 /LIBPATH:D:\Source\Cbc-2.8.8\Cbc\MSVisualStudio\v10\x64-v110-Release cplex1251.lib libClp.lib libCbc.lib libCgl.lib libOsi.lib libOsiClp.lib libCoinUtils.lib gurobi_c++md2012.lib gurobi56.lib glpk_4_52.lib build-debug\GenModel.obj build-debug\GenModelCplex.obj build-debug\GenModelGlpk.obj build-debug\GenModelGurobi.obj build-debug\GenModelInterface.obj build-debug\GenModelOsi.obj build-debug\GenModelOsiInterface.obj build-debug\ProblemReaderOsi.obj /def:src\GenModelInterface.def
             Creating library lib\GenModelDLLd.lib and object lib\GenModelDLLd.exp
      1>GenModelDLLd.exp : warning LNK4070: /OUT:GenModelInterface.dll directive in .EXP differs from output filename 'lib\GenModelDLLd.dll'; ignoring directive
          scons: done building targets.
@@ -32,4 +55,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:07.55
+Time Elapsed 00:00:23.14
