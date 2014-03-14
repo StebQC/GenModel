@@ -421,60 +421,60 @@ private:
 
 long GenModelGurobi::SetDirectParam(int whichparam, genmodel_param value, string type, string message)
 {
-	try {
-		if (type == "dbl")
-			(static_cast<GurobiData*>(solverdata))->model->getEnv().set(GRB_DoubleParam(whichparam), value.dblval);
-		else if (type == "long")
-			(static_cast<GurobiData*>(solverdata))->model->getEnv().set(GRB_IntParam(whichparam), value.longval);
-		else if (type == "str")
-			(static_cast<GurobiData*>(solverdata))->model->getEnv().set(GRB_StringParam(whichparam), value.strval);
-	}
-	catch (...)
-	{
-		printf("Exception during optimization\n");
-	}
-	return 0;
+    try {
+        if (type == "dbl")
+            (static_cast<GurobiData*>(solverdata))->model->getEnv().set(GRB_DoubleParam(whichparam), value.dblval);
+        else if (type == "long")
+            (static_cast<GurobiData*>(solverdata))->model->getEnv().set(GRB_IntParam(whichparam), value.longval);
+        else if (type == "str")
+            (static_cast<GurobiData*>(solverdata))->model->getEnv().set(GRB_StringParam(whichparam), value.strval);
+    }
+    catch (...)
+    {
+        printf("Exception during optimization\n");
+    }
+    return 0;
 }
 
 long GenModelGurobi::SetParam(string param, int whichparam, string type, string message, bool implemented)
 {
-	bool notimplmessage = boolParam.count("throw_on_unimplemeted_option") > 0 && boolParam["throw_on_unimplemeted_option"];
+    bool notimplmessage = boolParam.count("throw_on_unimplemeted_option") > 0 && boolParam["throw_on_unimplemeted_option"];
 
-	if (type == "dbl")
-	{
-		if (dblParam.count(param) > 0 && implemented)
-			SetDirectParam(whichparam, dbl2param(dblParam[param]), type, message);
-		else if (notimplmessage && !implemented && dblParam.count(param) > 0)
-			throw (string("Parameter ") + param + " not implemented in GenModelGurobi");
-	}
-	else if (type == "long")
-	{
-		if (longParam.count(param) > 0 && implemented)
-			SetDirectParam(whichparam, long2param(longParam[param]), type, message);
-		else if (notimplmessage && !implemented && longParam.count(param) > 0)
-			throw (string("Parameter ") + param + " not implemented in GenModelGurobi");
-	}
-	else if (type == "str")
-	{
-		if (strParam.count(param) > 0 && implemented)
-			SetDirectParam(whichparam, str2param(strParam[param]), type, message);
-		else if (notimplmessage && !implemented && strParam.count(param) > 0)
-			throw (string("Parameter ") + param + " not implemented in GenModelGurobi");
-	}
-	else if (type == "bool")
-	{
-		if (boolParam.count(param) > 0 && implemented)
-		{
-			if (boolParam[param])
-				SetDirectParam(whichparam, long2param(0), "long", message);
-			else
-				SetDirectParam(whichparam, long2param(-1), "long", message);
-		}
-		else if (notimplmessage && !implemented && boolParam.count(param) > 0)
-			throw (string("Parameter ") + param + " not implemented in GenModelGurobi");
-	}
+    if (type == "dbl")
+    {
+        if (dblParam.count(param) > 0 && implemented)
+            SetDirectParam(whichparam, dbl2param(dblParam[param]), type, message);
+        else if (notimplmessage && !implemented && dblParam.count(param) > 0)
+            throw (string("Parameter ") + param + " not implemented in GenModelGurobi");
+    }
+    else if (type == "long")
+    {
+        if (longParam.count(param) > 0 && implemented)
+            SetDirectParam(whichparam, long2param(longParam[param]), type, message);
+        else if (notimplmessage && !implemented && longParam.count(param) > 0)
+            throw (string("Parameter ") + param + " not implemented in GenModelGurobi");
+    }
+    else if (type == "str")
+    {
+        if (strParam.count(param) > 0 && implemented)
+            SetDirectParam(whichparam, str2param(strParam[param]), type, message);
+        else if (notimplmessage && !implemented && strParam.count(param) > 0)
+            throw (string("Parameter ") + param + " not implemented in GenModelGurobi");
+    }
+    else if (type == "bool")
+    {
+        if (boolParam.count(param) > 0 && implemented)
+        {
+            if (boolParam[param])
+                SetDirectParam(whichparam, long2param(0), "long", message);
+            else
+                SetDirectParam(whichparam, long2param(-1), "long", message);
+        }
+        else if (notimplmessage && !implemented && boolParam.count(param) > 0)
+            throw (string("Parameter ") + param + " not implemented in GenModelGurobi");
+    }
 
-	return 0;
+    return 0;
 }
 
 void GenModelGurobi::AttachCallback(bool(*callbackFunction) (double obj, double bestBound, bool feasibleSolution))

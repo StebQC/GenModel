@@ -9,8 +9,8 @@ GenModel::GenModel()
     hassolution = false;
     bcreated = false;
     binit = false;
-    nc=0;
-    nr=0;
+    nc = 0;
+    nr = 0;
     solverdata = NULL;
 }
 

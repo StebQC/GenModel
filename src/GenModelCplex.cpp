@@ -531,13 +531,13 @@ static int CPXPUBLIC SetInfoCallbackFunc(CPXCENVptr env, void *cbdata, int where
 
     CplexData* d = (CplexData*)cbhandle;
 
-    double objval = 0, bestBound = 0, feasibleSolution;
+    double objval = 0, bestBound = 0, feasibleSolution = 0;
 
     CPXgetcallbackinfo(env, cbdata, wherefrom, CPX_CALLBACK_INFO_BEST_INTEGER, &objval);
     CPXgetcallbackinfo(env, cbdata, wherefrom, CPX_CALLBACK_INFO_BEST_REMAINING, &bestBound);
-    CPXgetcallbackinfo(env, cbdata, wherefrom, CPX_CALLBACK_INFO_MIP_FEAS, &feasibleSolution);
+	CPXgetcallbackinfo(env, cbdata, wherefrom, CPX_CALLBACK_INFO_MIP_FEAS, &feasibleSolution);
 
-    if (d->callbackFunction(objval, bestBound, feasibleSolution > 0))
+    if (d->callbackFunction(objval, bestBound, feasibleSolution >= 1))
     {
         return 1;
     }
@@ -551,7 +551,6 @@ void GenModelCplex::AttachCallback(bool(*callbackFunction) (double obj, double b
     d->callbackFunction = callbackFunction;
 
     CPXsetinfocallbackfunc(d->env, SetInfoCallbackFunc, d);
-    //CPXsetincumbentcallbackfunc(d->env, MipIncumbentCallbackFunc2, d);
 }
 
 double GenModelCplex::GetMIPBestBound()

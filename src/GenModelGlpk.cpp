@@ -1,15 +1,15 @@
 #include "GenModelGlpk.h"
 #ifdef OSI_MODULE
-#include "ProblemReaderOsi.h"
+#ifndef WIN64	// For some reasons, osi has a problem with glpk under windows 
+//#include "ProblemReaderOsi.h"
+#endif
 #endif
 #include <limits>
 
-
-
 long GenModelGlpk::WriteProblemToLpFile(string filename)
 {
-	//if(!bcreated)
-	//    throw string("WriteProblemToLpFile() not available : Problem not created yet;");
+	if(!bcreated)
+	    throw string("WriteProblemToLpFile() not available : Problem not created yet;");
 	
 	GlpkData* d = static_cast<GlpkData*>(solverdata);
 	glp_write_prob(d->model, 0, filename.c_str());
@@ -18,8 +18,8 @@ long GenModelGlpk::WriteProblemToLpFile(string filename)
 
 long GenModelGlpk::WriteSolutionToFile(string filename)
 {
-	//if(!bcreated)
-	//    throw string("WriteSolutionToFile() not available : Problem not created yet;");
+	if(!bcreated)
+	    throw string("WriteSolutionToFile() not available : Problem not created yet;");
 	
 	FILE* f = fopen(filename.c_str(), "w");
 	for(long i = 0; i < long(vars.n); i++)
@@ -233,9 +233,13 @@ long GenModelGlpk::CreateModel()
 long GenModelGlpk::CreateModel(string filename, int type, string dn)
 {
 #ifdef OSI_MODULE
-	ReadFromFile(static_cast<GenModel*>(this), filename, type);
-	SetNumbers();
-	CreateModel();
+#ifndef WIN64
+	//ReadFromFile(static_cast<GenModel*>(this), filename, type);
+	//SetNumbers();
+	//CreateModel();
+#else
+	throw string("Cannot use CreateModel(filenamem, type, dn) : Osi Module cannot be used under windows");
+#endif
 #else
 	throw string("Cannot use CreateModel(filenamem, type, dn) : Osi Module not present");
 #endif
@@ -348,7 +352,7 @@ long GenModelGlpk::Init(string name)
 	GlpkData* d = static_cast<GlpkData*>(solverdata);
 
 	d->model = glp_create_prob();
-	glp_set_prob_name(d->model, name.c_str());
+	//glp_set_prob_name(d->model, name.c_str());
 	glp_init_iptcp(&(d->interior_param));
 	glp_init_smcp(&(d->simplex_param));
 	glp_init_iocp(&(d->mip_param));
@@ -368,7 +372,6 @@ long GenModelGlpk::Init(string name)
 		//d->simplex_param.tm_lim = dblParam["relative_mip_gap_tolerance"];
 		d->mip_param.mip_gap = dblParam["relative_mip_gap_tolerance"];
 	}
-	
 	
 	return 0;
 }

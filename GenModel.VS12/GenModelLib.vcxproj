@@ -66,10 +66,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <NMakeBuildCommandLine>pushd .. &amp;&amp; scons --notest --cplex --gurobi --glpk --osi</NMakeBuildCommandLine>
+    <NMakeBuildCommandLine>pushd .. &amp;&amp; scons --cplex --gurobi --glpk --osi</NMakeBuildCommandLine>
     <NMakeOutput>GenModelDLL.dll</NMakeOutput>
     <NMakeCleanCommandLine>pushd .. &amp;&amp; scons --clean</NMakeCleanCommandLine>
-    <NMakeReBuildCommandLine>pushd .. &amp;&amp; scons --clean &amp;&amp; scons --notest --cplex --gurobi --glpk --osi</NMakeReBuildCommandLine>
+    <NMakeReBuildCommandLine>pushd .. &amp;&amp; scons --clean &amp;&amp; scons --cplex --gurobi --glpk --osi</NMakeReBuildCommandLine>
     <NMakePreprocessorDefinitions>WIN64;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
     <OutDir>.\build</OutDir>
     <IntDir>.\build</IntDir>
