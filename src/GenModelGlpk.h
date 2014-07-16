@@ -63,6 +63,7 @@ public:
 	long Clean();
 	long WriteSolutionToFile(string filename);
 	long WriteProblemToLpFile(string filename);
+	double GetMIPRelativeGap();
 };
 
 

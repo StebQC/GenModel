@@ -47,8 +47,8 @@ cpppath = {
 		r"/usr/local/include/",
 		r"/usr/include/coin/"],
 	"Windows": [r"C:\ILOG\CPLEX_Enterprise_Server126\CPLEX_Studio\cplex\include",
-		r"C:\gurobi560\win64\include",
-		r"D:\Source\glpk-4.52\src",
+		r"D:\gurobi563\win64\include",
+		r"D:\Source\glpk-4.54\src",
 		r"D:\Source\Cbc-2.8.8\include"],
 	"Darwin": [os.environ.get('HOME', '')+"/Applications/IBM/ILOG/CPLEX_Studio126/cplex/include",
 			  r"/Library/gurobi560/mac64/include",
@@ -64,8 +64,8 @@ libpath = {
 			  r"/usr/local/lib/",
 			  r"../lib"],
 	"Windows": [r"C:\ILOG\CPLEX_Enterprise_Server126\CPLEX_Studio\cplex\lib\x64_windows_vs2010\stat_mta",
-		r"C:\gurobi560\win64\lib",
-		r"D:\Source\glpk-4.52\w64",
+		r"D:\gurobi563\win64\lib",
+		r"D:\Source\glpk-4.54\w64",
 		r"D:\Source\Cbc-2.8.8\Cbc\MSVisualStudio\v10\x64-v110-Release",
 		r"..\lib"],
 	"Darwin": [os.environ.get('HOME', '')+"/Applications/IBM/ILOG/CPLEX_Studio126/cplex/lib/x86-64_osx/static_pic",
@@ -106,7 +106,7 @@ moduleLibs = {
 		},
 	"Glpk": {
 		"Linux": ["glpk"],
-		"Windows": ["glpk_4_52"],
+		"Windows": ["glpk_4_54"],
 		"Darwin": ["glpk"]
 		},
 	"Scip": {

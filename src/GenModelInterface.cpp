@@ -400,7 +400,7 @@ GenModelDLL_API bool STDCALL _GetBounds(double* lb, double* ub, long length, lon
 GenModelDLL_API double STDCALL _GetLowerBound(long col, long token)
 {
     _VerifyId(token);
-    if (col != long(gmmap[token]->nc) || col < 0)
+    if (col >= long(gmmap[token]->nc) || col < 0)
         return (numeric_limits<double>::has_signaling_NaN ? numeric_limits<double>::signaling_NaN() : numeric_limits<double>::quiet_NaN());
     
     return gmmap[token]->vars.lb[col];
@@ -409,7 +409,7 @@ GenModelDLL_API double STDCALL _GetLowerBound(long col, long token)
 GenModelDLL_API double STDCALL _GetUpperBound(long col, long token)
 {
     _VerifyId(token);
-    if (col != long(gmmap[token]->nc) || col < 0)
+    if (col >= long(gmmap[token]->nc) || col < 0)
         return (numeric_limits<double>::has_signaling_NaN ? numeric_limits<double>::signaling_NaN() : numeric_limits<double>::quiet_NaN());
     
     return gmmap[token]->vars.ub[col];

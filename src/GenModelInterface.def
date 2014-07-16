@@ -39,3 +39,5 @@ _GetMIPRelativeGap
 _SetObjUpperCutoff
 _GetMIPBestBound
 _AttachCallback
+_GetLowerBound
+_GetUpperBound

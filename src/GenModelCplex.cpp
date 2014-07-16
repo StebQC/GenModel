@@ -142,7 +142,7 @@ long GenModelCplex::SetSol()
     if(boolParam.count("print_version") > 0 && boolParam["print_version"])
         printf("*********** Genmodel version = %s ***********\n", version.c_str());
 
-    return 0;
+    return solstat;
 }
 
 long GenModelCplex::AddSolverRow(vector<int>& ind, vector<double>& val, double rhs, char sense, string name)
@@ -535,7 +535,7 @@ static int CPXPUBLIC SetInfoCallbackFunc(CPXCENVptr env, void *cbdata, int where
 
     CPXgetcallbackinfo(env, cbdata, wherefrom, CPX_CALLBACK_INFO_BEST_INTEGER, &objval);
     CPXgetcallbackinfo(env, cbdata, wherefrom, CPX_CALLBACK_INFO_BEST_REMAINING, &bestBound);
-	CPXgetcallbackinfo(env, cbdata, wherefrom, CPX_CALLBACK_INFO_MIP_FEAS, &feasibleSolution);
+    CPXgetcallbackinfo(env, cbdata, wherefrom, CPX_CALLBACK_INFO_MIP_FEAS, &feasibleSolution);
 
     if (d->callbackFunction(objval, bestBound, feasibleSolution >= 1))
     {
@@ -565,7 +565,7 @@ double GenModelCplex::GetMIPBestBound()
 double GenModelCplex::GetMIPRelativeGap()
 {
     if(!bcreated)
-        return ThrowError("ChangeBulkNz() not available : Problem not created yet");
+        return ThrowError("GetMIPRelativeGap() not available : Problem not created yet");
     CplexData* d = (CplexData*)solverdata;
     double gap = 0, bestobjval = 0;
     CPXgetbestobjval(d->env, d->lp, &bestobjval);

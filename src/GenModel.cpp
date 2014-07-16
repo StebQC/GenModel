@@ -298,7 +298,7 @@ long GenModel::DeleteMipStarts()
 
 double GenModel::GetMIPRelativeGap()
 {
-    throw string("DeleteMipStarts() Not implemented");
+    throw string("GetMIPRelativeGap() Not implemented");
     return 0.0;
 }
 

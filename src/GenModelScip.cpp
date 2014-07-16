@@ -46,32 +46,32 @@ long GenModelScip::WriteSolutionToFile(string filename)
 
 long GenModelScip::Solve()
 {
-	ScipData* d = static_cast<ScipData*>(solverdata);
-	SCIP_CALL(SCIPsolve(d->scip));
+    ScipData* d = static_cast<ScipData*>(solverdata);
+    SCIP_CALL(SCIPsolve(d->scip));
     //SCIP_CALL(SCIPfreeTransform(d->scip));
-	return 0;
+    return 0;
 }
 
 long GenModelScip::SetSol()
 {
-	vars.sol.clear();
-	vars.sol.resize(vars.n,0);
-	vars.rc.clear();
-	vars.rc.resize(vars.n,0);
-	ScipData* d = (ScipData*)solverdata;
+    vars.sol.clear();
+    vars.sol.resize(vars.n,0);
+    vars.rc.clear();
+    vars.rc.resize(vars.n,0);
+    ScipData* d = (ScipData*)solverdata;
     
-	//feasible = static_cast<bool>(tempfeas);
-	//dualfeasible = static_cast<bool>(tempdualfeas);
+    //feasible = static_cast<bool>(tempfeas);
+    //dualfeasible = static_cast<bool>(tempdualfeas);
     
     //printf("num cons = %d\n", SCIPgetNConss(d->scip));
 
     printf("SetSol - Init\n");
     
-	hassolution =  SCIPgetNSols(d->scip) > 0;
+    hassolution =  SCIPgetNSols(d->scip) > 0;
     solstat = SCIPgetStatus(d->scip);
 
-	if(!hassolution)
-		return 1;
+    if(!hassolution)
+        return 1;
     
     printf("SCIP INVALID= %f %d\n",  SCIP_INVALID, vars.n);
     
@@ -85,7 +85,7 @@ long GenModelScip::SetSol()
      SCIP_Bool transformed;
     
     for(long i = 0; i < long(nc); i++)
-	{
+    {
         SCIP_VAR* temp; // = d->vars[i];
         if(transformed)
             SCIP_CALL(SCIPgetTransformedVar(d->scip, d->vars[i], &temp));
@@ -95,15 +95,15 @@ long GenModelScip::SetSol()
         assert(transformed == SCIPvarIsTransformed(temp));
         if(boolParam.count("mip") == 0 || !boolParam["mip"])
             vars.rc[i] = SCIPgetVarRedcost(d->scip, temp);
-	}
+    }
     
     printf("SetSol - Set columns\n");
     
     //SCIP_VAR* temp;
     //SCIP_CALL(SCIPgetTransformedVar(d->scip, d->vars[d->qvar_index], &temp));
     
-	for(long i = 0; i < long(nr); i++)
-	{
+    for(long i = 0; i < long(nr); i++)
+    {
         SCIP_CONS* temp; // = d->cons[i];
         if(transformed)
             SCIP_CALL(SCIPgetTransformedCons(d->scip, d->cons[i], &temp));
@@ -116,8 +116,8 @@ long GenModelScip::SetSol()
         consts[i].slack =  consts[i].lrhs-SCIPgetActivityLinear(d->scip,temp,sol);
         
         //consts[i].slack = SCIPgetRhsLinear(d->scip, d->cons[i]);
-		//consts[i].slack = slack[i];
-	}
+        //consts[i].slack = slack[i];
+    }
     
     printf("SetSol - Set rows\n");
     
@@ -131,81 +131,81 @@ long GenModelScip::SetSol()
     
     printf("SetSol - End\n");
     
-	return 0;
+    return 0;
 }
 
 long GenModelScip::AddSolverRow(vector<int>& ind, vector<double>& val, double rhs, char sense, string name)
 {
     /*
-	AddModelRow(ind, val, rhs, sense, name);
-	AddCut(&ind[0], &val[0], int(ind.size()), rhs, sense, name.c_str());
+    AddModelRow(ind, val, rhs, sense, name);
+    AddCut(&ind[0], &val[0], int(ind.size()), rhs, sense, name.c_str());
     */
-	return 0;
+    return 0;
 }
 
 long GenModelScip::AddCut(int* cols, double* vals, int nz, double rhs, char sense, const char* name)
 {
     /*
-	ScipData* d = (ScipData*)solverdata;
-	int rmatbeg = 0;
+    ScipData* d = (ScipData*)solverdata;
+    int rmatbeg = 0;
 
-	CPXaddrows(d->env, d->lp, 0, 1, nz, &rhs, &sense, &rmatbeg, cols, vals, NULL, (char**)(&name));
-	d->nr++;
+    CPXaddrows(d->env, d->lp, 0, 1, nz, &rhs, &sense, &rmatbeg, cols, vals, NULL, (char**)(&name));
+    d->nr++;
     */
-	return 0;
+    return 0;
 }
 
 long GenModelScip::AddSolverCol(vector<int>& ind, vector<double>& val, double obj, double lb, double ub, string name, char type)
 {
     /*
-	AddModelCol(ind, val, obj, lb, ub, name, type);
-	AddCol(&ind[0], &val[0], int(ind.size()), obj, lb, ub, name.c_str(), type);
+    AddModelCol(ind, val, obj, lb, ub, name, type);
+    AddCol(&ind[0], &val[0], int(ind.size()), obj, lb, ub, name.c_str(), type);
     */
-	return 0;
+    return 0;
 }
 
 long GenModelScip::AddCol(int* newi, double* newcol, int nz, double obj, double lb, double ub, const char* name, char type)
 {
     /*
-	ScipData* d = (ScipData*)solverdata;
-	int cmatbeg = 0;
+    ScipData* d = (ScipData*)solverdata;
+    int cmatbeg = 0;
 
-	double clb = lb;
-	if(clb == numeric_limits<double>::infinity())
-		clb = CPX_INFBOUND;
-	else if(clb == -numeric_limits<double>::infinity())
-		clb = -CPX_INFBOUND;
+    double clb = lb;
+    if(clb == numeric_limits<double>::infinity())
+        clb = CPX_INFBOUND;
+    else if(clb == -numeric_limits<double>::infinity())
+        clb = -CPX_INFBOUND;
 
-	double cub = ub;
-		if(cub == numeric_limits<double>::infinity())
-			cub = CPX_INFBOUND;
-		else if(cub == -numeric_limits<double>::infinity())
-			cub = -CPX_INFBOUND;
+    double cub = ub;
+        if(cub == numeric_limits<double>::infinity())
+            cub = CPX_INFBOUND;
+        else if(cub == -numeric_limits<double>::infinity())
+            cub = -CPX_INFBOUND;
 
-	CPXaddcols(d->env, d->lp, 1, nz, &obj, &cmatbeg, newi, newcol, &clb, &cub, (char**)(&name));
-	if(type != 'C')
-	{
-		int cind = d->nc;
-		CPXchgctype(d->env, d->lp, 1, &cind, &type);
-	}
-	d->nc++;
+    CPXaddcols(d->env, d->lp, 1, nz, &obj, &cmatbeg, newi, newcol, &clb, &cub, (char**)(&name));
+    if(type != 'C')
+    {
+        int cind = d->nc;
+        CPXchgctype(d->env, d->lp, 1, &cind, &type);
+    }
+    d->nc++;
     */
-	return 0;
+    return 0;
 }
 
 long GenModelScip::CreateModel()
 {
-	ScipData* d = (ScipData*)solverdata;
-	
+    ScipData* d = (ScipData*)solverdata;
+    
     SCIP_CALL(SCIPsetObjsense(d->scip,SCIP_OBJSENSE_MAXIMIZE));
 
-	if(boolParam.count("maximize") > 0 && boolParam["maximize"])
-		SCIP_CALL(SCIPsetObjsense(d->scip,SCIP_OBJSENSE_MAXIMIZE));
-	else
-		SCIP_CALL(SCIPsetObjsense(d->scip,SCIP_OBJSENSE_MINIMIZE));
-	double lb;
+    if(boolParam.count("maximize") > 0 && boolParam["maximize"])
+        SCIP_CALL(SCIPsetObjsense(d->scip,SCIP_OBJSENSE_MAXIMIZE));
+    else
+        SCIP_CALL(SCIPsetObjsense(d->scip,SCIP_OBJSENSE_MINIMIZE));
+    double lb;
     double ub;
-	
+    
     d->qvar_index = -1;
     d->qcons_index = -1;
     d->nr = nr;
@@ -221,22 +221,22 @@ long GenModelScip::CreateModel()
     d->vars = new SCIP_VAR*[d->nc];
     d->type = new SCIP_VARTYPE[d->nc];
     
-	nz=0;
+    nz=0;
     
     for(unsigned long i = 0; i < nc; i++)
-	{
-		if(vars.ub[i] == numeric_limits<double>::infinity())
-			ub = SCIPinfinity(d->scip);
-		else if(vars.ub[i] == -numeric_limits<double>::infinity())
-			ub = -SCIPinfinity(d->scip);
-		else
-			ub = vars.ub[i];
-		if(vars.lb[i] == numeric_limits<double>::infinity())
-			lb = SCIPinfinity(d->scip);
-		else if(vars.lb[i] == -numeric_limits<double>::infinity())
-			lb = -SCIPinfinity(d->scip);
-		else
-			lb = vars.lb[i];
+    {
+        if(vars.ub[i] == numeric_limits<double>::infinity())
+            ub = SCIPinfinity(d->scip);
+        else if(vars.ub[i] == -numeric_limits<double>::infinity())
+            ub = -SCIPinfinity(d->scip);
+        else
+            ub = vars.ub[i];
+        if(vars.lb[i] == numeric_limits<double>::infinity())
+            lb = SCIPinfinity(d->scip);
+        else if(vars.lb[i] == -numeric_limits<double>::infinity())
+            lb = -SCIPinfinity(d->scip);
+        else
+            lb = vars.lb[i];
         switch (vars.type[i])
         {
             case 'B':
@@ -257,16 +257,16 @@ long GenModelScip::CreateModel()
         }
         SCIP_CALL(SCIPcreateVarBasic(d->scip, &(d->vars[i]), vars.name[i].c_str(), lb, ub, vars.obj[i], d->type[i]));
         SCIP_CALL(SCIPaddVar(d->scip, d->vars[i]));
-	}
+    }
     
-	for(unsigned long i = 0; i < nr; i++)
-	{
+    for(unsigned long i = 0; i < nr; i++)
+    {
         vector<SCIP_VAR*> cols(consts[i].nz);
-		for(unsigned long j = 0; j < consts[i].nz; j++)
-		{
+        for(unsigned long j = 0; j < consts[i].nz; j++)
+        {
             cols[j] = d->vars[consts[i].cols[j]];
-			nz++;
-		}
+            nz++;
+        }
         if(consts[i].sense == 'R')
         {
             if(consts[i].lrhs == numeric_limits<double>::infinity())
@@ -317,8 +317,8 @@ long GenModelScip::CreateModel()
         //SCIP_CALL(SCIPcreateConsLinear(d->scip, &d->cons[i], consts[i].name.c_str(), consts[i].nz, &(cols[0]), &(consts[i].coefs[0]), lb, ub,
         //                                    true,true,true,true,true,false,true,false,false,false));
         SCIP_CALL(SCIPaddCons(d->scip, d->cons[i]));
-	}
-	if(!vars.qi.empty())
+    }
+    if(!vars.qi.empty())
         boolParam["qp"] = true;
     if(boolParam["qp_mat"])
     {
@@ -364,9 +364,9 @@ long GenModelScip::CreateModel()
                                                    &(qpj[0]), &(qpv[0]), 0.0, 0.0));//qlhs, qrhs));
             SCIP_CALL(SCIPaddCons(d->scip, d->cons[d->qcons_index]));
         }
-	}
+    }
     
-	return 0;
+    return 0;
 }
 
 long GenModelScip::CreateModel(string filename, int type, string dn)
@@ -388,7 +388,7 @@ long GenModelScip::CreateModel(string filename, int type, string dn)
     Init(dn);
     ScipData* d = (ScipData*)solverdata;
     SCIPreadProb(d->scip, filename, filename.substr(filename.find_last_of('.'));
-	CreateModel();
+    CreateModel();
     SetNumbers();
     CreateModel();
     
@@ -398,41 +398,41 @@ long GenModelScip::CreateModel(string filename, int type, string dn)
 
 long GenModelScip::ChangeBulkBounds(int count, int * ind, char * type, double * vals)
 {
-	/*
+    /*
     ScipData* d = (ScipData*)solverdata;
 
-	for(long i = 0; i < count; i++)
-	{
-		if (type[i] == 'L' || type[i] == 'B')
-		{
-			vars.lb[i] = vals[i];
-		}
-		if (type[i] == 'U' || type[i] == 'B')
-		{
-			vars.ub[i] = vals[i];
-		}
-	}
+    for(long i = 0; i < count; i++)
+    {
+        if (type[i] == 'L' || type[i] == 'B')
+        {
+            vars.lb[i] = vals[i];
+        }
+        if (type[i] == 'U' || type[i] == 'B')
+        {
+            vars.ub[i] = vals[i];
+        }
+    }
 
-	CPXchgbds(d->env, d->lp, count, ind, type, vals);
+    CPXchgbds(d->env, d->lp, count, ind, type, vals);
     */
 
-	return 0;
+    return 0;
 }
 
 long GenModelScip::ChangeBulkObjectives(int count, int * ind, double * vals)
 {
-	/*
+    /*
     ScipData* d = (ScipData*)solverdata;
 
-	for(long i = 0; i < count; i++)
-	{
-		vars.obj[i] = vals[i];
-	}
+    for(long i = 0; i < count; i++)
+    {
+        vars.obj[i] = vals[i];
+    }
 
-	CPXchgobj(d->env, d->lp, count, ind, vals);
+    CPXchgobj(d->env, d->lp, count, ind, vals);
     */
 
-	return 0;
+    return 0;
 }
 
 long GenModelScip::ChangeBulkNz(int count, int* rind, int* cind, double * vals)
@@ -467,24 +467,24 @@ long GenModelScip::ChangeBulkNz(int count, int* rind, int* cind, double * vals)
 long GenModelScip::DeleteMipStarts()
 {
     /*
-	ScipData* d = (ScipData*)solverdata;
-	int n = CPXgetnummipstarts(d->env, d->lp);
-	if (n > 0)
-		CPXdelmipstarts(d->env, d->lp, 0, n - 1);
+    ScipData* d = (ScipData*)solverdata;
+    int n = CPXgetnummipstarts(d->env, d->lp);
+    if (n > 0)
+        CPXdelmipstarts(d->env, d->lp, 0, n - 1);
     */
-	return 0;
+    return 0;
 }
 
 double GenModelScip::GetMIPRelativeGap()
 {
     /*
-	ScipData* d = (ScipData*)solverdata;
-	double gap, bestobjval = 0;
-	CPXgetbestobjval(d->env, d->lp, &bestobjval);
-	if (bestobjval > 0)	// If the optimal solution is found by the presolve, the CPXgetbestobjval = 0, and the CPXgetmiprelgap ~ 1
-		CPXgetmiprelgap(d->env, d->lp, &gap);
-	
-	return gap;*/
+    ScipData* d = (ScipData*)solverdata;
+    double gap, bestobjval = 0;
+    CPXgetbestobjval(d->env, d->lp, &bestobjval);
+    if (bestobjval > 0)	// If the optimal solution is found by the presolve, the CPXgetbestobjval = 0, and the CPXgetmiprelgap ~ 1
+        CPXgetmiprelgap(d->env, d->lp, &gap);
+    
+    return gap;*/
     return 0.0;
 }
 
@@ -531,18 +531,18 @@ long GenModelScip::SwitchToLp()
 long GenModelScip::Init(string name)
 {
     try {
-	if(solverdata == NULL)
-		solverdata = new ScipData();
-	else
-	{
-		static_cast<ScipData*>(solverdata)->Delete();
-		static_cast<ScipData*>(solverdata)->Reset();
-	}
+    if(solverdata == NULL)
+        solverdata = new ScipData();
+    else
+    {
+        static_cast<ScipData*>(solverdata)->Delete();
+        static_cast<ScipData*>(solverdata)->Reset();
+    }
 
-	ScipData* d = static_cast<ScipData*>(solverdata);
+    ScipData* d = static_cast<ScipData*>(solverdata);
 
         
-	SCIP_CALL( SCIPcreate(&(d->scip)) );
+    SCIP_CALL( SCIPcreate(&(d->scip)) );
     SCIP_CALL( SCIPincludeDefaultPlugins(d->scip) );
         
     // create empty problem
@@ -589,7 +589,7 @@ long GenModelScip::Init(string name)
     
     
     
-	return 0;
+    return 0;
 }
 
 long GenModelScip::SetDirectParam(string whichparam, genmodel_param value, string type, string message)
@@ -658,28 +658,28 @@ long GenModelScip::SetParam(string param, string whichparam, string type, string
 
 long GenModelScip::Clean()
 {
-	if(solverdata != NULL)
-		delete static_cast<ScipData*>(solverdata);
+    if(solverdata != NULL)
+        delete static_cast<ScipData*>(solverdata);
 
-	return 0;
+    return 0;
 }
 
 long ScipData::Reset()
 {
-	vars = NULL;
+    vars = NULL;
     cons = NULL;
 
-	return 0;
+    return 0;
 }
 
 ScipData::ScipData()
 {
-	Reset();
+    Reset();
 }
 
 ScipData::~ScipData()
 {
-	Delete();
+    Delete();
 }
 
 long ScipData::ClearStructure()
@@ -702,7 +702,7 @@ long ScipData::ClearStructure()
 
 long ScipData::Delete()
 {
-	ClearStructure();
+    ClearStructure();
 
-	return 0;
+    return 0;
 }

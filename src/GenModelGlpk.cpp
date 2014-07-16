@@ -34,30 +34,38 @@ long GenModelGlpk::WriteSolutionToFile(string filename)
 
 long GenModelGlpk::Solve()
 {
-	if(boolParam.count("qp") > 0 && boolParam["qp"])
+	if (boolParam.count("qp") > 0 && boolParam["qp"])
+	{
 		return 1;
+	}
 	GlpkData* d = static_cast<GlpkData*>(solverdata);
+	glp_scale_prob(d->model, GLP_SF_SKIP | GLP_SF_GM | GLP_SF_EQ);	// Scale the problem
 
-	if(boolParam.count("mip") > 0 && boolParam["mip"])
+	if (boolParam.count("mip") > 0 && boolParam["mip"])
 	{
 		d->mip_param.presolve = GLP_ON;			// Set the presolve to GLP_ON which is disabled by default
 		glp_intopt(d->model, &(d->mip_param));
 	}
-	else if(strParam.count("algo") > 0 && strParam["algo"] == "interior")
+	else if (strParam.count("algo") > 0 && strParam["algo"] == "interior")
+	{
 		glp_interior(d->model, &(d->interior_param));
-	else if(strParam.count("algo") > 0 && strParam["algo"] == "dual")
+	}
+	else if (strParam.count("algo") > 0 && strParam["algo"] == "dual")
 	{
 		d->simplex_param.meth = GLP_DUAL;
 		glp_simplex(d->model, &(d->simplex_param));
 	}
-	else if(strParam.count("algo") > 0 && strParam["algo"] == "primal")
+	else if (strParam.count("algo") > 0 && strParam["algo"] == "primal")
 	{
 		d->simplex_param.meth = GLP_PRIMAL;
 		glp_simplex(d->model, &(d->simplex_param));
 	}
 	else
+	{
 		glp_simplex(d->model, &(d->simplex_param));
+	}
 
+	hassolution = 1;
 	return 0;
 }
 
@@ -118,6 +126,11 @@ long GenModelGlpk::SetSol()
 		printf("*********** Genmodel version = %s ***********\n", version.c_str());
 
 	return 0;
+}
+
+double GenModelGlpk::GetMIPRelativeGap()
+{
+	return -1;
 }
 
 long GenModelGlpk::CreateModel()
@@ -357,7 +370,7 @@ long GenModelGlpk::Init(string name)
 	glp_init_smcp(&(d->simplex_param));
 	glp_init_iocp(&(d->mip_param));
 
-	if(boolParam.count("log_output_stdout") > 0 && !boolParam["log_output_stdout"])
+	if(boolParam.count("log_output_stdout") > 0 && boolParam["log_output_stdout"])
 	{
 		d->simplex_param.msg_lev = GLP_MSG_OFF;
 		d->mip_param.msg_lev = GLP_MSG_OFF;
@@ -369,7 +382,7 @@ long GenModelGlpk::Init(string name)
 	}
 	if(dblParam.count("relative_mip_gap_tolerance") > 0)
 	{
-		//d->simplex_param.tm_lim = dblParam["relative_mip_gap_tolerance"];
+		//d->simplex_param.tol_bnd = dblParam["relative_mip_gap_tolerance"];
 		d->mip_param.mip_gap = dblParam["relative_mip_gap_tolerance"];
 	}
 	

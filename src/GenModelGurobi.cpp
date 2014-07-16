@@ -107,6 +107,8 @@ long GenModelGurobi::SetSol()
         printf("Exception during optimization\n");
     }
 
+    hassolution = 1;
+
     return 0;
 }
 
@@ -225,6 +227,22 @@ long GenModelGurobi::AddSolverRow(vector<int>& ind, vector<double>& val, double 
     AddCut(&ind[0], &val[0], int(ind.size()), rhs, sense, name.c_str());
 
     return 0;
+}
+
+double GenModelGurobi::GetMIPRelativeGap()
+{
+    GurobiData* d = (GurobiData*)solverdata;
+
+    double objVal = d->model->get(GRB_DoubleAttr_ObjVal);
+    double gap = 0;
+    double isMip = (boolParam.count("mip") > 0 && boolParam["mip"]);
+
+    if (objVal > 0 && isMip)
+    {
+        gap = abs(-1.0 + d->model->get(GRB_DoubleAttr_ObjBound) / objVal);
+    }
+
+    return gap;
 }
 
 long GenModelGurobi::AddCut(int* cols, double* vals, int nz, double rhs, char sense, const char* name)
@@ -502,6 +520,7 @@ long GurobiData::Reset()
     env = NULL;
     grb_v = NULL;
     equiv = NULL;
+	callback = NULL;
 
     return 0;
 }
@@ -518,7 +537,9 @@ GurobiData::~GurobiData()
 }
 long GurobiData::Delete()
 {
-    if(obj != NULL)
+	delete callback;
+	callback = NULL;
+	if (obj != NULL)
         delete[] obj;
     if(ub != NULL)
         delete[] ub;
@@ -534,9 +555,5 @@ long GurobiData::Delete()
         delete env;
     if(equiv != NULL)
         delete[] equiv;
-    if (callback != NULL)
-    {
-        delete callback;
-    }
     return 0;
 }
