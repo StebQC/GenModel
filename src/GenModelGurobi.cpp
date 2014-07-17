@@ -239,7 +239,14 @@ double GenModelGurobi::GetMIPRelativeGap()
 
     if (objVal > 0 && isMip)
     {
-        gap = abs(-1.0 + d->model->get(GRB_DoubleAttr_ObjBound) / objVal);
+		try
+		{
+			gap = abs(-1.0 + d->model->get(GRB_DoubleAttr_ObjBound) / objVal);
+		}
+		catch (...)
+		{
+			return 0; // For some reasons, the function d->model->get(GRB_DoubleAttr_ObjBound) throw an exception when the bound is the same as the objVal.
+		}
     }
 
     return gap;
