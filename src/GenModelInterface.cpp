@@ -157,6 +157,13 @@ GenModelDLL_API long STDCALL _AddNzBulk(long* rows, long* cols, double* values, 
     return true;
 }
 
+GenModelDLL_API long STDCALL _AddSolverColumn(int count, int* ind, double* val, double obj, double lb, double ub, char* name, char type, long token)
+{
+	_VerifyId(token);
+	string namsAsString(name);
+	return gmmap[token]->AddSolverColumn(count, ind, val, obj, lb, ub, namsAsString, type);
+}
+
 GenModelDLL_API long STDCALL _SetNumbers(long token)
 {
     _VerifyId(token);
@@ -477,6 +484,21 @@ GenModelDLL_API long STDCALL _ChangeBulkObjectives(int count, int* indices, doub
     return gmmap[token]->ChangeBulkObjectives(count, indices, values);
 }
 
+GenModelDLL_API long STDCALL _ChangeBulkNz(int count, int* rind, int* cind, double* values, long token)
+{
+	return gmmap[token]->ChangeBulkNz(count, rind, cind, values);
+}
+
+GenModelDLL_API long STDCALL _ChangeBulkRHS(int count, int* indices, double* values, long token)
+{
+	for (int i = 0; i < count; i++)
+	{
+		gmmap[token]->consts[indices[i]].lrhs = values[i];
+	}
+
+	return gmmap[token]->ChangeBulkRHS(count, indices, values);
+}
+
 GenModelDLL_API long STDCALL _DeleteMipStarts(long token)
 {
     _VerifyId(token);
@@ -502,6 +524,30 @@ GenModelDLL_API void STDCALL _AttachCallback(bool(*callbackFunction) (double obj
 GenModelDLL_API double STDCALL _GetMIPBestBound(long token)
 {
     return gmmap[token]->GetMIPBestBound();
+}
+
+GenModelDLL_API bool STDCALL _ExportModel(char* filename, long token)
+{
+	std::string filenameAsString(filename);
+	if (gmmap[token]->ExportModel(filenameAsString) == 0)
+	{
+		return false;
+	}
+
+	return true;
+
+}
+
+GenModelDLL_API bool STDCALL _ExportConflict(char* filename, long token)
+{
+	std::string filenameAsString(filename);
+	if (gmmap[token]->ExportConflict(filenameAsString) == 0)
+	{
+		return false;
+	}
+
+	return true;
+
 }
 
 GENMODEL_EXTERN_C_END

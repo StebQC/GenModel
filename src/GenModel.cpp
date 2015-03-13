@@ -230,6 +230,15 @@ long GenModel::SetQpCoef(long i, long j, double val)
     return 0;
 }
 
+long GenModel::AddModelColumn(int count, int* ind, double* val, double obj, double lb, double ub, string name, char type)
+{
+	AddVar(name, obj, lb, ub, type);
+	for(long i = 0; i < count; i++)
+		AddNz(ind[i], vars.n-1, val[i]);
+
+	return 0;
+}
+
 long GenModel::AddModelCol(vector<int>& ind, vector<double>& val, double obj, double lb, double ub, string name, char type)
 {
     AddVar(name, obj, lb, ub, type);
@@ -246,6 +255,11 @@ long GenModel::AddModelRow(vector<int>& ind, vector<double>& val, double rhs, ch
         AddNzToLast(ind[i], val[i]);
 
     return 0;
+}
+
+long GenModel::AddSolverColumn(int count, int* ind, double* val, double obj, double lb, double ub, string name, char type)
+{
+	return 0;
 }
 
 long GenModel::ChangeBulkBounds(int count, int * ind, char * type, double * vals)
@@ -293,6 +307,11 @@ double GenModel::GetMIPBestBound()
     return 0;
 }
 
+long GenModel::ChangeBulkRHS(int count, int* ind, double* vals)
+{
+	return 0;
+}
+
 long GenModel::DeleteMipStarts()
 {
     throw string("DeleteMipStarts() Not implemented");
@@ -303,6 +322,16 @@ double GenModel::GetMIPRelativeGap()
 {
     throw string("GetMIPRelativeGap() Not implemented");
     return 0.0;
+}
+
+long GenModel::ExportModel(string cname)
+{
+	return 0;
+}
+
+long GenModel::ExportConflict(string cname)
+{
+	return 0;
 }
 
 long ModVars::AddVar(string nn, double o, double l, double u, char t)

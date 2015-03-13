@@ -34,6 +34,8 @@ _SetSense
 _GetBounds
 _ChangeBulkBounds
 _ChangeBulkObjectives
+_ChangeBulkNz
+_ChangeBulkRHS
 _DeleteMipStarts
 _GetMIPRelativeGap
 _SetObjUpperCutoff
@@ -41,3 +43,5 @@ _GetMIPBestBound
 _AttachCallback
 _GetLowerBound
 _GetUpperBound
+_ExportModel
+_ExportConflict

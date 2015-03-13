@@ -94,6 +94,7 @@ public:
     long AddConst(string cname, double rhs, char sense);
     long AddVar(string nn, double o, double l, double u, char t);
     long AddVars(string nn, long size, double o, double l, double u, char t);
+	long AddModelColumn(int count, int* ind, double* val, double obj, double lb, double ub, string name, char type = 'C');
     long AddModelCol(vector<int>& ind, vector<double>& val, double obj, double lb, double ub, string name, char type = 'C');
     long AddModelRow(vector<int>& ind, vector<double>& val, double rhs, char sense, string name);
     long SetQpCoef(long i, long j, double val);
@@ -121,6 +122,8 @@ public:
     virtual long WriteSolutionToFile(string filename);
     virtual long ChangeBulkObjectives(int count, int * ind, double * vals);
     virtual long ChangeBulkNz(int count, int* rind, int* cind, double* vals);
+	virtual long ChangeBulkRHS(int count, int* ind, double* vals);
+	virtual long AddSolverColumn(int count, int* ind, double* val, double obj, double lb, double ub, string name, char type = 'C');
     virtual long DeleteMipStarts();
     virtual long SetObjUpperCutoff(double value);
     virtual void AttachCallback(bool(*callbackFunction) (double obj, double bestBound, bool feasibleSolution));
@@ -129,6 +132,8 @@ public:
     virtual double FindConstraintMaxLhs(long row);
     virtual double FindConstraintMinLhs(long row);
     virtual long MakeConstraintFeasible(long row);
+	virtual long ExportModel(string aFileName);
+	virtual long ExportConflict(string aFileName);
     bool binit;
     bool bcreated;
     string name;

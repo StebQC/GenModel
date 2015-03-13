@@ -145,6 +145,14 @@ long GenModelCplex::SetSol()
     return solstat;
 }
 
+long GenModelCplex::AddSolverColumn(int count, int* ind, double* val, double obj, double lb, double ub, string name, char type)
+{
+	AddModelColumn(count, ind, val, obj, lb, ub, name, type);
+	AddCol(ind, val, count, obj, lb, ub, name.c_str(), type);
+
+	return 0;
+}
+
 long GenModelCplex::AddSolverRow(vector<int>& ind, vector<double>& val, double rhs, char sense, string name)
 {
     if(!bcreated)
@@ -477,7 +485,14 @@ long GenModelCplex::ChangeBulkNz(int count, int* rind, int* cind, double * vals)
     return 0;
 }
 
+long GenModelCplex::ChangeBulkRHS(int count, int* ind, double* vals)
+{
+	CplexData* d = (CplexData*)solverdata;
 
+	CPXchgrhs(d->env, d->lp, count, ind, vals);
+
+	return 0;
+}
 
 long GenModelCplex::DeleteMipStarts()
 {
@@ -574,6 +589,19 @@ double GenModelCplex::GetMIPRelativeGap()
         CPXgetmiprelgap(d->env, d->lp, &gap);
     
     return gap;
+}
+
+long GenModelCplex::ExportConflict(string aFilename)
+{
+	CplexData* d = (CplexData*)solverdata;
+	CPXrefineconflict(d->env, d->lp, NULL, NULL);
+	return CPXclpwrite(d->env, d->lp, aFilename.c_str());
+}
+
+long GenModelCplex::ExportModel(string aFilename)
+{
+	CplexData* d = (CplexData*)solverdata;
+	return CPXwriteprob(d->env, d->lp, aFilename.c_str(), NULL);
 }
 
 long GenModelCplex::SwitchToMip()

@@ -65,13 +65,15 @@ public:
     long Init(string name);
     long CreateModel(string filename, int type=0, string dn="");
     long CreateModel();
-    long AddSolverCol(vector<int>& ind, vector<double>& val, double obj, double lb, double ub, string name, char type = 'C');
+	long AddSolverColumn(int count, int* ind, double* val, double obj, double lb, double ub, string name, char type = 'C');
+	long AddSolverCol(vector<int>& ind, vector<double>& val, double obj, double lb, double ub, string name, char type = 'C');
     long AddSolverRow(vector<int>& ind, vector<double>& val, double rhs, char sense, string name);
     long AddCol(int* newi, double* newcol, int nz, double obj, double lb, double ub, const char* name, char type = 'C');
     long AddCut(int* cols, double* vals, int nz, double rhs, char sense, const char* name);
     long ChangeBulkBounds(int count, int * ind, char * type, double * vals);
     long ChangeBulkObjectives(int count, int * ind, double * vals);
     long ChangeBulkNz(int count, int* rind, int* cind, double* vals);
+	long ChangeBulkRHS(int count, int* ind, double* vals);
     long WriteProblemToLpFile(string filename);
     long WriteSolutionToFile(string filename);
     long SwitchToMip();
@@ -86,6 +88,8 @@ public:
     double GetMIPRelativeGap();
     long SetDirectParam(int whichparam, genmodel_param value, string type, string message);
     long SetParam(string param, int whichparam, string type, string message, bool implemented = true);
+	long ExportModel(string aFilename);
+	long ExportConflict(string aFileName);
 };
 
 #endif // GenModelCplex_H
