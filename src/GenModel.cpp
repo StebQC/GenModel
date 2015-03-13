@@ -250,16 +250,19 @@ long GenModel::AddModelRow(vector<int>& ind, vector<double>& val, double rhs, ch
 
 long GenModel::ChangeBulkBounds(int count, int * ind, char * type, double * vals)
 {
+	throw string("ChangeBulkBounds() Not implemented");
     return 0;
 }
 
 long GenModel::ChangeBulkObjectives(int count, int * ind, double * vals)
 {
+	throw string("ChangeBulkObjectives() Not implemented");
     return 0;
 }
 
 long GenModel::ChangeBulkNz(int count, int* rind, int* cind, double* vals)
 {
+	throw string("ChangeBulkNz() Not implemented");
     return 0;
 }
 

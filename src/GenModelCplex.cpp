@@ -435,8 +435,6 @@ long GenModelCplex::ChangeBulkBounds(int count, int * ind, char * type, double *
 
 long GenModelCplex::ChangeBulkObjectives(int count, int * ind, double * vals)
 {
-    if(!bcreated)
-        return ThrowError("ChangeBulkObjectives() not available : Problem not created yet");
     CplexData* d = (CplexData*)solverdata;
 
     for(long i = 0; i < count; i++)
@@ -444,7 +442,10 @@ long GenModelCplex::ChangeBulkObjectives(int count, int * ind, double * vals)
         vars.obj[ind[i]] = vals[i];
     }
 
-    CPXchgobj(d->env, d->lp, count, ind, vals);
+	if (bcreated)
+	{
+		CPXchgobj(d->env, d->lp, count, ind, vals);
+	}
 
     return 0;
 }
@@ -619,7 +620,6 @@ long GenModelCplex::SwitchToLp()
 
 long GenModelCplex::Init(string name)
 {
-    
     //strParam.count("log_file")
     //dblParam.count("relative_mip_gap_tolerance")
     //dblParam.count("absolute_mip_gap_tolerance")
@@ -670,7 +670,7 @@ long GenModelCplex::Init(string name)
     // General settings
     boolParam["log_output_stdout"] = true;
     SetParam("log_output_stdout", CPX_PARAM_SCRIND, "bool", "Failure to turn on/off log output to stdout");
-    SetParam("log_level", 0, "long", "Failure to set log level", false);
+	SetParam("log_level", CPX_PARAM_MIPDISPLAY, "long", "Failure to set log level");
     SetParam("use_data_checking", CPX_PARAM_DATACHECK, "bool", "Failure to turn on/off data checking");
     SetParam("nb_threads", CPX_PARAM_THREADS, "long", "Failure to set the number of threads");
     if(boolParam.count("use_preprocessor") > 0 && !boolParam["use_preprocessor"])
@@ -689,8 +689,12 @@ long GenModelCplex::Init(string name)
     SetParam("nb_cut_pass", CPX_PARAM_CUTPASS, "long", "Failure to set the number of cut pass");
     SetParam("feasibility_pump_level", CPX_PARAM_FPHEUR, "long", "Failure to set the feasibility pump level");
     SetParam("probing_level", CPX_PARAM_PROBE, "long", "Failure to set the probing level");
-    SetParam("mip_emphasis", CPX_PARAM_MIPEMPHASIS, "long", "Failure to set the MIP emphasis");
-    if(boolParam.count("use_cut_callback") > 0 && boolParam["use_cut_callback"])
+	SetParam("mip_emphasis", CPX_PARAM_MIPEMPHASIS, "long", "Failure to set the MIP emphasis");
+	SetParam("mip_search", CPX_PARAM_MIPSEARCH, "long", "Failure to set the MIP search strategy");
+	SetParam("starting_algo", CPX_PARAM_STARTALG, "long", "Failure to set the starting algo parameter");
+	SetParam("node_algo", CPX_PARAM_SUBALG, "long", "Failure to set the node algo parameter");
+	
+	if(boolParam.count("use_cut_callback") > 0 && boolParam["use_cut_callback"])
     {
         SetDirectParam(CPX_PARAM_PRELINEAR, long2param(0), "long", "Failure to use cut callback (CPX_PARAM_PRELINEAR)");
         SetDirectParam(CPX_PARAM_MIPCBREDLP, long2param(0), "long", "Failure to use cut callback (CPX_PARAM_MIPCBREDLP)");
@@ -812,6 +816,8 @@ long GenModelCplex::Init(string name)
         return 1;
     }
 
+	fflush(stdout);
+
     return 0;
 }
 
@@ -832,7 +838,8 @@ long GenModelCplex::SetDirectParam(int whichparam, genmodel_param value, string 
 
 long GenModelCplex::SetParam(string param, int whichparam, string type, string message, bool implemented)
 {
-    bool notimplmessage = boolParam.count("throw_on_unimplemeted_option") > 0 && boolParam["throw_on_unimplemeted_option"];
+	printf("Setting param: %s \n", param);
+	bool notimplmessage = boolParam.count("throw_on_unimplemeted_option") > 0 && boolParam["throw_on_unimplemeted_option"];
 
     if (type == "dbl")
     {
